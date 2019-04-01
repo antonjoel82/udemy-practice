@@ -1,3 +1,6 @@
+body {
+    margin: 0px;
+}
 .container {
     display: flex;
     flex-wrap: wrap-reverse;
@@ -7,14 +10,22 @@
 h1 {
     font-family: fantasy;
     font-size: 3em;
-    border-right: solid 2px blue;
-    border-bottom: solid 2px blue;
+    border-right: solid 2px black;
+    border-bottom: solid 2px black;
     width: 400px;
     text-align: center;
+    box-shadow: 4px 4px 5px #777777;
+    margin-top: 10px;
 }
 
 img {
     width: 400px;
     height: 350px;
     margin: 10px;
+    box-shadow: 4px 4px 5px #777777;
+    transition: all 0.7s;
+}
+
+img:hover {
+    transform: scale(1.1);
 }
