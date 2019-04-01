@@ -18,12 +18,15 @@ h1 {
     margin-top: 10px;
 }
 
+/* transition: [property] [duration] [timing-function] [delay]; */
+
 img {
     width: 400px;
     height: 350px;
     margin: 10px;
     box-shadow: 4px 4px 5px #777777;
-    transition: all 0.7s;
+    transform-origin: left top;
+    transition: all 1s ease-in-out;
 }
 
 img:hover {
