@@ -1,0 +1,65 @@
+body {
+	font: 'Raleway', sans-serif;
+    color: rgba(0,0,0,.5);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .5em;
+    top: 15%;
+	background: linear-gradient(to right, red , yellow); /* Standard syntax */
+}
+
+input.color-sel {
+    display: inline-block;
+    cursor: pointer;
+    width: 3rem;
+    height: 3rem;
+    border-radius: 3rem;
+    border-width: 0.125rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+    padding:0;
+    box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;    box-shadow:rgba(0,0,0,0.8) 0px 5px 15px, inset rgba(0,0,0,0.15) 0px -10px 20px;
+    transition: all 1s;
+}
+
+input.color-sel:hover {
+
+    transform: scale(1.1);
+}
+
+input.color-sel::-webkit-color-swatch {
+    border-radius: 3rem;
+    border-width: 0.125rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+    padding: 0;
+}
+
+input.color-sel::-webkit-color-swatch-wrapper {
+    border-radius: 3rem;
+    border-width: 0.125rem;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.2);
+    padding: 0;
+}
+
+h1 {
+    font: 600 3.5em 'Raleway', sans-serif;
+    color: rgba(0,0,0,.5);
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: .5em;
+    width: 100%;
+}
+
+h3 {
+    visibility: hidden;
+	font: 900 1rem monospace;
+    display: inline-block;
+    color: rgba(0,0,0,.8);
+    text-align: center;
+    text-transform: none;
+    letter-spacing: 0.01em;
+    background-color: rgba(255, 255, 255, 0.4);
+    padding: 0.5rem;
+}
