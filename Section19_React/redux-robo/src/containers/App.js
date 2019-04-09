@@ -2,17 +2,30 @@ import React from "react";
 import CardList from "../components/CardList";
 import SearchBox from "../components/SearchBox";
 import Scroll from "../components/Scroll";
+import {connect} from "react-redux";
 import { containsCaseInsensitive } from "../helpers"
 import "tachyons";
 import "./App.css"
+import {setSearchField} from "../actions";
 import ErrorBoundary from "./ErrorBoundary";
+
+const mapStateToProps = (state) => {
+    return {
+        searchField: state.searchField
+    };
+}
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        onSearchChange: (event) => dispatch(setSearchField(event.target.value))
+    };
+}
 
 class App extends React.Component {
     constructor() {
         super();
         this.state = {
-            robots: [], 
-            searchField : ""
+            robots: []
         };
     }
 
@@ -22,16 +35,11 @@ class App extends React.Component {
             .then((users) => this.setState({robots: users}));
     }
 
-    onSearchChange = (event) => {
-        this.setState({searchField : event.target.value});
-    }
-
     render() {
-        const {robots, searchField} = this.state;
+        const {robots} = this.state;
+        const {searchField, onSearchChange} = this.props;
 
         const filteredRobots = robots.filter((robot) => {
-            //This is a naive solution and only works performantly
-            //with fictionally small data sets...
             return containsCaseInsensitive(robot.username, searchField)
                 || containsCaseInsensitive(robot.name, searchField)
                 || containsCaseInsensitive(robot.email, searchField);
@@ -42,7 +50,7 @@ class App extends React.Component {
             : (
                 <div className="tc">
                     <h1 className="f1">RoboFriends</h1>
-                    <SearchBox searchChange={this.onSearchChange}/>
+                    <SearchBox searchChange={onSearchChange}/>
                     <Scroll>
                         <ErrorBoundary>
                             <CardList robots={filteredRobots}/>
@@ -53,4 +61,4 @@ class App extends React.Component {
     }
 };
 
-export default App; 
+export default connect(mapStateToProps, mapDispatchToProps)(App); 
