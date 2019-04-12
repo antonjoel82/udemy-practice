@@ -1,7 +1,4 @@
-const helpers = require("./helpers.js");
-const http = require("http");
 const express = require("express");
-const path = require("path");
 const bodyParser = require("body-parser");
 
 /**
@@ -13,34 +10,13 @@ const app = express();
 app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
-app.get("/", (req, res) => {
-	res.send(helpers.getUser());
-});
-app.get("/profile", (req, res) => {
-	res.send("<h1>Getting the profile with Express!</h1>");
-});
+app.get("/:id", (req, res) => {
+	// console.log(req.query);
+	// console.log(req.body);
+	// console.log(req.headers);
+	console.log(req.params);
 
-app.post("/profile", (req, res) => {
-	console.log(req.body);
-	res.send(helpers.getUser());
-})
-
-/**
- * Serves the gradient directory (js, css, html) to the client.
- * Go to /gradient.html to see the page
- */
-app.use(express.static("gradient"));
+	res.status(200).send("Success");
+});
 
 app.listen(3000);
-
-/**
- * HTTP Server example
- */
-// const server = http.createServer((req, res) => {
-// 	console.log("Method", req.method);
-// 	console.log("URL", req.url);
-
-// 	res.setHeader("Content-Type", "application/json");
-// 	res.end(`${JSON.stringify(helpers.getUser())}`);	
-// });
-// server.listen(3000);
