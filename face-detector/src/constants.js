@@ -1,5 +1,6 @@
 export const Route = {
 	SIGN_IN: "SIGN_IN",
+	SIGN_OUT: "SIGN_OUT",
 	REGISTER: "REGISTER",
-	LOGGED_IN: "LOGGED_IN"
+	HOME: "HOME"
 }
