@@ -1,41 +1,49 @@
 import React from "react";
 
 import {Route} from "../../constants";
-import {fromDbUser} from "../../User";
 
-class SignIn extends React.Component {
+class Register extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			signInEmail: "",
-			signInPassword: ""
+			registerEmail: "",
+			registerPassword: "",
+			registerName: ""
 		}
 	}
 
+	onNameChange = (event) => {
+		this.setState({registerName: event.target.value})
+	}
+
 	onEmailChange = (event) => {
-		this.setState({signInEmail: event.target.value})
+		this.setState({registerEmail: event.target.value})
 	}
 
 	onPasswordChange = (event) => {
-		this.setState({signInPassword: event.target.value})
+		this.setState({registerPassword: event.target.value})
 	}
 
-	onSubmitSignIn = () => {
-		fetch("http://localhost:3000/signin", {
+	onSubmitRegister = () => {
+		// this.props.onRouteChange(Route.HOME);
+
+		fetch("http://localhost:3000/register", {
 			method: "post",
 			headers: {"Content-Type": "application/json"},
 			body: JSON.stringify({
-				email: this.state.signInEmail,
-				password: this.state.signInPassword
+				name: this.state.registerName,
+				email: this.state.registerEmail,
+				password: this.state.registerPassword
 			})
 		})
 		.then(response => response.json())
-		.then((user) => {
-			if (user.id) {
-				this.props.loadUser(fromDbUser(user));
-				this.props.onRouteChange(Route.HOME);
+		.then((data) => {
+			console.log(data);
+			if (data.id) {
+				this.props.onRouteChange(Route.SIGN_IN);
+				alert("Successfully registered. Please sign in!");
 			} else {
-				alert("Incorrect Sign In info. Please try again!")
+				alert("Failed to register. Please try again!");
 			}
 		})
 	}
@@ -48,7 +56,17 @@ class SignIn extends React.Component {
 				<main className="pa4 black-80">
 					<div className="measure">
 						<fieldset id="sign_up" className="ba b--transparent ph0 mh0">
-							<legend className="f2 fw6 ph0 mh0">Sign In</legend>
+							<legend className="f2 fw6 ph0 mh0">Register</legend>
+							<div className="mt3">
+								<label className="db fw6 lh-copy f6" htmlFor="name">Name</label>
+								<input 
+									className="pa2 input-reset ba bg-transparent hover-bg-black hover-white w-100" 
+									type="text" 
+									name="name"  
+									id="name"
+									onChange={this.onNameChange}
+								/>
+							</div>
 							<div className="mt3">
 								<label className="db fw6 lh-copy f6" htmlFor="email-address">Email</label>
 								<input 
@@ -72,17 +90,17 @@ class SignIn extends React.Component {
 						</fieldset>
 						<div className="">
 							<input 
-								onClick={this.onSubmitSignIn} 
+								onClick={this.onSubmitRegister} 
 								className="b ph3 pv2 input-reset ba b--black bg-transparent grow pointer f6 dib" 
-								type="submit" 
-								value="Sign in"
+								type="button" 
+								value="Register"
 							/>
 						</div>
 						<div className="lh-copy mt3">
 							<p 
-								onClick={() => onRouteChange(Route.REGISTER)} 
+								onClick={() => onRouteChange(Route.SIGN_IN)} 
 								className="f6 link dim black db pointer">
-								Register
+								Already registered? Sign in
 							</p>
 						</div>
 					</div>
@@ -91,4 +109,4 @@ class SignIn extends React.Component {
 		);
 	}
 }
-export default SignIn
+export default Register

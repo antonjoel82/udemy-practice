@@ -35,9 +35,11 @@ app.post("/signin", (req, res) => {
 	// 	// res = false
 	// });
 
-	if (req.body.email === db.users[0].email 
-			&& req.body.password === db.users[0].password) {
-				res.json("Success!");
+	const user = db.users[db.users.length - 1];
+	console.log("Email", req.body.email, "Password", req.body.password, "User", user);
+	if (req.body.email === user.email 
+			&& req.body.password === user.password) {
+				res.json(user);
 	} else {
 		res.status(400).json("Sign-in failed...");
 	}
@@ -53,16 +55,16 @@ const createUser = (userInfo) => {
 	userInfo.entries = 0;
 	userInfo.joined = new Date();
 
-	bcrypt.hash(userInfo.password, null, null, function(err, hash) {
-		if (err) {
-			console.log(err);
-		}
+	// bcrypt.hash(userInfo.password, null, null, function(err, hash) {
+	// 	if (err) {
+	// 		console.log(err);
+	// 	}
 		
-		// Store hash in your password DB.
-		userInfo.password = hash;
-	})
+	// 	// Store hash in your password DB.
+	// 	userInfo.password = hash;
+	// })
 
-	console.log(`Before return`, userInfo);
+	// console.log(`Before return`, userInfo);
 	return userInfo;
 }
 
@@ -100,13 +102,15 @@ app.get("/profile/:userId", (req, res) => {
 
 app.put("/image", (req, res) => {
 	const id = req.body.id;
+	const score = req.body.score;
 	let userToFind = null;
 
 	//Update user img count, rank
 	db.users.forEach((user) => {
 		if (user.id === id) {
 			userToFind = user;
-			return res.json(++userToFind.entries);
+			userToFind.entries = score ? userToFind.entries + score : 0;
+			return res.json(userToFind.entries);
 		}
 	})
 
