@@ -28,17 +28,19 @@ const particleOptions = {
   }
 }
 
+const initialState = {
+  input: "",
+  imageUrl: "",
+  boxes: [],
+  route: Route.SIGN_IN,
+  isSignedIn: false,
+  user: new User()
+};
+
 class App extends Component {
   constructor() {
     super();
-    this.state = {
-      input: "",
-      imageUrl: "",
-      boxes: [],
-      route: Route.SIGN_IN,
-      isSignedIn: false,
-      user: new User()
-    }
+    this.state = initialState;
   }
 
   calculateFaceLocation = (data) => {
@@ -46,6 +48,10 @@ class App extends Component {
     const img = document.getElementById("inputImg");
     const width = Number(img.width);
     const height = Number(img.height);
+
+    if (!regions) {
+      return [];
+    }
 
     return regions.map((info) => {
       const bb = info.region_info.bounding_box;
@@ -68,7 +74,7 @@ class App extends Component {
 
   onRouteChange = (newRoute) => {
     if (newRoute === Route.SIGN_OUT) {
-      this.setState({isSignedIn: false});
+      this.setState(initialState);
     }
     else if (newRoute === Route.HOME) {
       this.setState({isSignedIn: true});
@@ -99,9 +105,7 @@ class App extends Component {
           })
           .then(response => response.json())
           .then((count) => {
-            if (count) {
-              this.setState({user: this.state.user.setEntries(count)});
-            }
+            this.setState({user: this.state.user.setEntries(count)});
           })
         }
       ).catch((err) => {
