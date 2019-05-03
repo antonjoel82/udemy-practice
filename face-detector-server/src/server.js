@@ -29,7 +29,7 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use(bodyParser.json());
 
 // app.get("/", (req, res) => {
-// 	res.json(db.users);
+// 	res.json("Hitting Root Page.");
 // })
 
 app.post("/signin", (req, res) => {
